@@ -29,8 +29,11 @@ func main() {
 	// notify on.
 	done := make(chan bool, 1)
 	go worker(done)
-
+	//
 	// Block until we receive a notification from the
 	// worker on the channel.
+	//Go 中的 goroutine 是并发执行的，main 函数启动了 worker goroutine 后，它并不会等待 worker 完成工作，而是继续执行。
+	//如果没有 <-done，main 函数可能会在 worker 完成工作之前就退出。这样就无法看到 worker 的输出（如 "working..." 和 "done"）。
+	//当 worker goroutine 执行完任务并通过 done <- true 向通道发送值时，main 函数中的 <-done 会解除阻塞，程序继续执行。
 	<-done
 }

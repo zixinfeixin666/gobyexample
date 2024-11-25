@@ -11,6 +11,9 @@ import "fmt"
 // we define anonymously in the body of `intSeq`. The
 // returned function _closes over_ the variable `i` to
 // form a closure.
+// intSeq 函数返回一个匿名函数。这个匿名函数没有名字，但它会被返回并赋值给调用者的变量。
+// 闭包的关键点在于，返回的匿名函数“闭合”了对变量 i 的引用。即使 intSeq 函数已经执行完毕，返回的匿名函数依然能够访问并修改 i。
+// 每次调用 intSeq 时，都会创建一个新的匿名函数，并且这个匿名函数拥有自己的 i 变量，因此每个调用 intSeq 返回的函数都有自己独立的 i 状态。
 func intSeq() func() int {
 	i := 0
 	return func() int {
